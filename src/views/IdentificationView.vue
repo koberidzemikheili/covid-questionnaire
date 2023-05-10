@@ -16,10 +16,7 @@
       <hr class="h-px mt-8 border-1 border-black" />
       <br />
       <div class="flex flex-wrap">
-        <form
-          class="w-full md:w-1/3 max-w-lg flex flex-col"
-          @submit.prevent="Submit"
-        >
+        <form class="w-full md:w-1/3 max-w-lg flex flex-col">
           <label for="name" class="font-semibold text-gray-800 mb-2 mt-4"
             >სახელი*</label
           >
@@ -29,6 +26,7 @@
             class="border border-gray-700 border-solid bg-transparent h-8"
             v-model="newFirstName"
           />
+          <span>{{ firstNameerrorMessage }}</span>
           <label for="lastname" class="font-semibold text-gray-800 mb-2 mt-4"
             >გვარი*</label
           >
@@ -38,16 +36,17 @@
             class="border border-gray-700 border-solid bg-transparent h-8"
             v-model="newLastName"
           />
+          <span>{{ lastNameerrorMessage }}</span>
           <label for="email" class="font-semibold text-gray-800 mb-2 mt-4"
             >მეილი*</label
           >
           <input
-            type="email"
+            type="text"
             id="email"
             class="border border-gray-700 border-solid bg-transparent h-8"
             v-model="newEmail"
           />
-          <button>next</button>
+          <span>{{ emailerrorMessage }}</span>
         </form>
 
         <div class="w-full md:w-2/3 flex justify-center">
@@ -57,6 +56,11 @@
             class="relative bottom-28"
           />
         </div>
+        <div class="w-full flex justify-center">
+          <button @click="Submit">
+            <img src="../assets/images/Vector 2.png" alt="arrow right" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -64,34 +68,71 @@
 
 <script>
 import { useStore } from "vuex";
-import { computed, ref } from "vue";
+import { useField } from "vee-validate";
 
 export default {
   setup() {
-    const store = useStore();
-    const newFirstName = ref("");
-    const newLastName = ref("");
-    const newEmail = ref("");
+    function validateField(value) {
+      if (!value) {
+        return "ველის შევსება სავალდებულოა";
+      }
 
-    const fullName = computed(function () {
-      return store.getters.fullName;
-    });
+      if (value.length < 3) {
+        return "მინიმუმ 3 სიმბოლო";
+      }
+      return true;
+    }
+    function validateEmailField(value) {
+      if (!value) {
+        return "ველის შევსება სავალდებულოა";
+      }
+
+      if (value.length < 3) {
+        return "მინიმუმ 3 სიმბოლო";
+      }
+      const regex = /^[A-Z0-9._%+-]+@redberry\.ge$/i;
+      if (!regex.test(value)) {
+        return "უნდა შეესაბამებოდეს მეილის ფორმატს";
+      }
+      return true;
+    }
+    const store = useStore();
+    const { value: newFirstName, errorMessage: firstNameerrorMessage } =
+      useField("newFirstName", validateField);
+    const { value: newLastName, errorMessage: lastNameerrorMessage } = useField(
+      "lastName",
+      validateField
+    );
+    const { value: newEmail, errorMessage: emailerrorMessage } = useField(
+      "email",
+      validateEmailField
+    );
 
     const Submit = function () {
-      store.commit("setFirstName", newFirstName.value);
-      store.commit("setLastName", newLastName.value);
-      store.commit("setEmail", newEmail.value);
-      newFirstName.value = "";
-      newLastName.value = "";
-      newEmail.value = "";
+      if (
+        newFirstName.value &&
+        newLastName.value &&
+        newEmail.value &&
+        !firstNameerrorMessage.value &&
+        !lastNameerrorMessage.value &&
+        !emailerrorMessage.value
+      ) {
+        store.commit("setFirstName", newFirstName.value);
+        store.commit("setLastName", newLastName.value);
+        store.commit("setEmail", newEmail.value);
+      } else {
+        return false;
+      }
     };
 
     return {
-      fullName,
       newFirstName,
       newLastName,
       newEmail,
       Submit,
+      firstNameerrorMessage,
+      lastNameerrorMessage,
+      emailerrorMessage,
     };
   },
 };
