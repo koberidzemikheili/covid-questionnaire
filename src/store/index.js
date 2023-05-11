@@ -8,22 +8,13 @@ export default createStore({
     email: "",
   },
   mutations: {
-    setFirstName(state, name) {
-      state.firstName = name;
-    },
-    setLastName(state, name) {
-      state.lastName = name;
-    },
-    setEmail(state, email) {
-      state.email = email;
+    setIdentificationData(state, data) {
+      state.firstName = data.name;
+      state.lastName = data.lastname;
+      state.email = data.email;
     },
     initState(state, savedState) {
       Object.assign(state, savedState);
-    },
-  },
-  getters: {
-    fullName(state) {
-      return state.firstName + " " + state.lastName;
     },
   },
   plugins: [
