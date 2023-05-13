@@ -5,12 +5,12 @@
       <div class="mx-32 mt-10 py-10">
         <div class="mb-10">
           <img
-            src="../assets/images/redberry.png"
+            src="@/assets/images/redberry.png"
             alt="Left image"
             class="float-left"
           />
           <img
-            src="../assets/images/right1.png"
+            src="@/assets/images/right1.png"
             alt="Right image"
             class="float-right"
           />
@@ -57,13 +57,13 @@
               {{ errors.email }}
             </div>
             <button>
-              <img src="../assets/images/Vector 2.png" alt="arrow right" />
+              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
             </button>
           </form>
 
           <div class="w-full md:w-2/3 flex justify-center">
             <img
-              src="../assets/images/scan2.png"
+              src="@/assets/images/scan2.png"
               alt="main image"
               class="relative bottom-28"
             />
@@ -75,7 +75,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useStore } from "vuex";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
@@ -95,27 +95,15 @@ const schema = yup.object().shape({
     .required("შევსება სავალდებულოა"),
 });
 
-export default {
-  setup() {
-    const store = useStore();
-    const { handleSubmit, errors } = useForm({ validationSchema: schema });
-    const { value: name } = useField("name");
-    const { value: lastname } = useField("lastname");
-    const { value: email } = useField("email");
+const store = useStore();
+const { handleSubmit, errors } = useForm({ validationSchema: schema });
+const { value: name } = useField("name");
+const { value: lastname } = useField("lastname");
+const { value: email } = useField("email");
 
-    const submitForm = handleSubmit((data) => {
-      store.commit("setIdentificationData", data);
-    });
-
-    return {
-      email,
-      name,
-      lastname,
-      errors,
-      submitForm,
-    };
-  },
-};
+const submitForm = handleSubmit((data) => {
+  store.commit("setIdentificationData", data);
+});
 </script>
 
 <style>
