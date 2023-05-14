@@ -21,6 +21,7 @@
           <form
             class="w-full md:w-1/3 max-w-lg flex flex-col"
             @submit.prevent="submitForm"
+            :initial-values="setFieldValue"
           >
             <label for="name" class="font-semibold text-gray-800 mb-2 mt-4"
               >სახელი*</label
@@ -79,6 +80,7 @@
 import { useStore } from "vuex";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
+import router from "@/router";
 
 const schema = yup.object().shape({
   name: yup
@@ -96,13 +98,22 @@ const schema = yup.object().shape({
 });
 
 const store = useStore();
-const { handleSubmit, errors } = useForm({ validationSchema: schema });
+
+const { handleSubmit, errors, setFieldValue } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    name: store.getters.getIdentificationData.firstName,
+    lastname: store.getters.getIdentificationData.lastName,
+    email: store.getters.getIdentificationData.email,
+  },
+});
 const { value: name } = useField("name");
 const { value: lastname } = useField("lastname");
 const { value: email } = useField("email");
 
 const submitForm = handleSubmit((data) => {
   store.commit("setIdentificationData", data);
+  router.push({ name: "Covidquestions" });
 });
 </script>
 
@@ -137,7 +148,7 @@ const submitForm = handleSubmit((data) => {
     height: 100px;
   }
   100% {
-    transform: translate(-5%, -450%);
+    transform: translate(-5%, -425%);
     width: 400px;
     height: 50px;
   }

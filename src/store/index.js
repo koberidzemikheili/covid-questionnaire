@@ -17,6 +17,12 @@ export default createStore({
       Object.assign(state, savedState);
     },
   },
+  getters: {
+    getIdentificationData: (state) => {
+      const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return savedState || state;
+    },
+  },
   plugins: [
     (store) => {
       const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY));

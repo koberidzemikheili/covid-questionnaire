@@ -12,6 +12,11 @@ const router = createRouter({
       name: "Identification",
       component: () => import("../views/IdentificationView.vue"),
     },
+    {
+      path: "/covidquestions",
+      name: "Covidquestions",
+      component: () => import("../views/CovidquestionsView.vue"),
+    },
   ],
 });
 
