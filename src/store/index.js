@@ -6,12 +6,22 @@ export default createStore({
     firstName: "",
     lastName: "",
     email: "",
+    had_covid: "",
+    had_antibody_test: false,
+    antibodies: {},
+    covid_sickness_date: null,
   },
   mutations: {
     setIdentificationData(state, data) {
       state.firstName = data.name;
       state.lastName = data.lastname;
       state.email = data.email;
+    },
+    setCovidquestionsData(state, data) {
+      state.had_covid = data.had_covid;
+      state.had_antibody_test = data.had_antibody_test;
+      state.antibodies = data.antibodies;
+      state.covid_sickness_date = data.covid_sickness_date;
     },
     initState(state, savedState) {
       Object.assign(state, savedState);

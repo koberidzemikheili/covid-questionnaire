@@ -21,7 +21,7 @@
           <form
             class="w-full md:w-1/3 max-w-lg flex flex-col"
             @submit.prevent="submitForm"
-            :initial-values="formValues"
+            :initial-values="setFieldValue"
           >
             <label for="had_covid" class="font-semibold text-gray-800 mb-2 mt-4"
               >გაქვს გადატანილი covid-19?*</label
@@ -48,7 +48,7 @@
               <label
                 for="vaccine_received"
                 class="font-semibold text-gray-800 mb-2 mt-4"
-                >მიიღეთ ვაქცინა?*</label
+                >ანტისხეულების ტესტი გაქვს გაკეთებული?*</label
               >
               <input
                 type="radio"
@@ -65,10 +65,37 @@
                 :value="false"
                 v-model="had_antibody_test"
               /><label>არა</label>
-              <div class="text-red-600" v-if="errors.had_covid">
+              <div class="text-red-600" v-if="errors.had_antibody_test">
                 {{ errors.had_antibody_test }}
               </div>
+              <div v-if="had_antibody_test === false">
+                <label
+                  for="test_date"
+                  class="font-semibold text-gray-800 mb-2 mt-4"
+                  >თუ გახსოვს გთხოვ მიუთითე ტესტის მიახლოებული რიცხვი და
+                  ანტისხეულების რაოდენობა</label
+                >
+                <input type="date" v-model="test_date" />
+                <input type="text" v-model="number" />
+              </div>
+              <div v-else>
+                <label
+                  for="test_date"
+                  class="font-semibold text-gray-800 mb-2 mt-4"
+                  >თუ გახსოვს გთხოვ მიუთითე ტესტის მიახლოებული რიცხვი და
+                  ანტისხეულების რაოდენობა</label
+                >
+                <input
+                  type="date"
+                  id="covid_sickness_date"
+                  v-model="covid_sickness_date"
+                />
+                <div class="text-red-600" v-if="errors.covid_sickness_date">
+                  {{ errors.covid_sickness_date }}
+                </div>
+              </div>
             </div>
+
             <button>
               <img src="@/assets/images/Vector 2.png" alt="arrow right" />
             </button>
@@ -89,7 +116,7 @@
 </template>
 
 <script setup>
-//import { useStore } from "vuex";
+import { useStore } from "vuex";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
 
@@ -99,16 +126,36 @@ const schema = yup.object().shape({
     is: "yes",
     then: () => yup.string().required("შევსება სავალდებულოა"),
   }),
+  antibodies: yup.object().when("had_antibody_test", {
+    is: false,
+    then: () =>
+      yup.object().shape({
+        test_date: yup.date(),
+        number: yup.string().matches(/^\d+$/, "Number must be a valid integer"),
+      }),
+  }),
 });
 
-//const store = useStore();
-const { handleSubmit, errors } = useForm({ validationSchema: schema });
+const store = useStore();
+const { handleSubmit, errors, setFieldValue } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    had_covid: store.getters.getIdentificationData.had_covid,
+    had_antibody_test: store.getters.getIdentificationData.had_antibody_test,
+    test_date: store.getters.getIdentificationData.test_date,
+    number: store.getters.getIdentificationData.antibodies.number,
+    covid_sickness_date:
+      store.getters.getIdentificationData.covid_sickness_date,
+  },
+});
 const { value: had_covid } = useField("had_covid");
-const { value: had_antibody_test } = useField("had_antibody_test", false);
-
+const { value: had_antibody_test } = useField("had_antibody_test");
+const { value: test_date } = useField("antibodies.test_date");
+const { value: number } = useField("antibodies.number");
+const { value: covid_sickness_date } = useField("covid_sickness_date");
 const submitForm = handleSubmit((data) => {
-  //store.commit("setIdentificationData", data);
   console.log(data);
+  store.commit("setCovidquestionsData", data);
 });
 </script>
 
