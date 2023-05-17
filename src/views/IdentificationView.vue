@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="yellow-overlay"></div>
     <div>
-      <div class="mx-32 mt-10 py-10">
+      <div class="mx-32 mt-10 py-10 min-w-full">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -62,12 +62,14 @@
 <script setup>
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
-import InputField from "../components/InputField.vue";
+import router from "@/router";
+import InputField from "@/components/InputField.vue";
 
 const store = useStore();
 const submitForm = (values) => {
   console.log(values);
   store.commit("setIdentificationData", values);
+  router.push({ name: "Covidquestions" });
 };
 </script>
 

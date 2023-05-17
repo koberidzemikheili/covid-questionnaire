@@ -17,9 +17,9 @@
 import { Field, ErrorMessage } from "vee-validate";
 import "@/Rules/rules";
 defineProps({
-  name: String,
-  label: String,
-  type: String,
-  rules: String,
+  name: { type: String, required: true },
+  label: { type: String, required: true },
+  type: { type: String, required: true },
+  rules: { type: String, required: true },
 });
 </script>

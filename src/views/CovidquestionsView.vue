@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="red-overlay"></div>
     <div>
-      <div class="mx-32 mt-10 py-10">
+      <div class="mx-32 mt-10 py-10 min-w-full">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -18,67 +18,67 @@
         <hr class="h-px mt-8 border-1 border-black" />
         <br />
         <div class="flex flex-wrap">
-          <form
+          <Form
             class="w-full md:w-1/3 max-w-lg flex flex-col"
-            @submit.prevent="submitForm"
-            :initial-values="setFieldValue"
+            @submit="submitForm"
           >
             <RadioField
-              label="გაქვს გადატანილი covid-19?"
-              id="had_covid"
+              label="გაქვს გადატანილი covid-19?*"
+              :options="covidOptions"
               type="radio"
-              :options="hadCovidOptions"
-              v-model="had_covid"
-              :error="errors.had_covid"
+              name="had_covid"
+              rules="required"
+              v-model="hadCovid"
             />
 
-            <div v-if="had_covid === 'yes'" class="flex flex-col">
+            <div v-if="hadCovid === 'yes'">
               <RadioField
-                label="ანტისხეულების ტესტი გაქვს გაკეთებული?"
-                id="had_antibody_test"
+                label="ანტისხეულების ტესტი გაქვს გაკეთებული?*"
+                :options="covidOptions2"
                 type="radio"
-                :options="hadAntibodyTestOptions"
-                v-model="had_antibody_test"
-                :error="errors.had_antibody_test"
+                name="had_antibody_test"
+                rules="required"
+                v-model="hadantibodytest"
               />
-
-              <div v-if="had_antibody_test === false">
-                <label
-                  for="test_date"
-                  class="font-semibold text-gray-800 mb-2 mt-4"
-                >
-                  თუ გახსოვს გთხოვთ მიუთითეთ ტესტის მიახლოებული რიცხვი და
-                  ანტისხეულების რაოდენობა
-                </label>
-                <input type="date" v-model="test_date" />
-                <input type="text" v-model="number" />
-                <div class="text-red-600" v-if="errors['antibodies.number']">
-                  {{ errors["antibodies.number"] }}
-                </div>
-              </div>
-              <div v-else>
-                <label
-                  for="test_date"
-                  class="font-semibold text-gray-800 mb-2 mt-4"
-                >
-                  მიუთითეთ მიახლოებითი პერიოდი (თვე/დღე/წელი) როდის გქონდა
-                  covid-19*
-                </label>
-                <input
-                  type="date"
-                  id="covid_sickness_date"
-                  v-model="covid_sickness_date"
-                />
-                <div class="text-red-600" v-if="errors.covid_sickness_date">
-                  {{ errors.covid_sickness_date }}
-                </div>
+            </div>
+            <div v-if="hadantibodytest === 'true'">
+              <Field type="date" name="covid_sickness_date" rules="required" />
+              <div>
+                <ErrorMessage name="covid_sickness_date" class="text-red-600" />
               </div>
             </div>
-
+            <div v-if="hadantibodytest === 'false'">
+              <div>
+                <label
+                  >თუ გახსოვს, გთხოვ მიუთითე ტესტის მიახლოებითი რიცხვი და
+                  ანტისხეულების რაოდენობა*</label
+                >
+              </div>
+              <Field
+                type="date"
+                name="antibodies.test_date"
+                class="bg-transparent"
+              />
+              <div>
+                <ErrorMessage
+                  name="antibodies.test_date"
+                  class="text-red-600"
+                />
+              </div>
+              <Field
+                type="text"
+                name="antibodies.number"
+                rules="numeric"
+                class="bg-transparent"
+              />
+              <div>
+                <ErrorMessage name="antibodies.number" class="text-red-600" />
+              </div>
+            </div>
             <button>
               <img src="@/assets/images/Vector 2.png" alt="arrow right" />
             </button>
-          </form>
+          </Form>
 
           <div class="w-full md:w-2/3 flex justify-center">
             <img
@@ -96,63 +96,26 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { useField, useForm } from "vee-validate";
-import * as yup from "yup";
-import RadioField from "@/components/RadioField.vue";
-
-const hadCovidOptions = [
-  { value: "yes", label: "კი" },
-  { value: "no", label: "არა" },
-  { value: "i have it now", label: "ახლა მაქვს" },
-];
-
-const hadAntibodyTestOptions = [
-  { value: true, label: "კი" },
-  { value: false, label: "არა" },
-];
-
-const schema = yup.object().shape({
-  had_covid: yup.string().required("შევსება სავალდებულოა"),
-  had_antibody_test: yup.boolean().when("had_covid", {
-    is: "yes",
-    then: () => yup.string().required("შევსება სავალდებულოა"),
-  }),
-  antibodies: yup.object().when("had_antibody_test", {
-    is: "false",
-    then: () =>
-      yup.object().shape({
-        number: yup.string().matches(/^[0-9]+$/, "მონაცემი უნდა იყოს რიცხვი"),
-        test_date: yup.date(),
-      }),
-  }),
-  covid_sickness_date: yup.date().when("had_antibody_test", {
-    is: "false",
-    then: () => yup.date().nullable(),
-    otherwise: () => yup.date().required("შევსება სავალდებულოა"),
-  }),
-});
-
+import { Form, Field, ErrorMessage } from "vee-validate";
+import { ref } from "vue";
+import "@/Rules/rules";
+import RadioField from "../components/RadioField.vue";
+const hadCovid = ref("");
+const hadantibodytest = ref();
 const store = useStore();
-const { handleSubmit, errors, setFieldValue } = useForm({
-  validationSchema: schema,
-  initialValues: {
-    had_covid: store.getters.getIdentificationData.had_covid,
-    had_antibody_test: store.getters.getIdentificationData.had_antibody_test,
-    test_date: store.getters.getIdentificationData.test_date,
-    number: store.getters.getIdentificationData.antibodies.number,
-    covid_sickness_date:
-      store.getters.getIdentificationData.covid_sickness_date,
-  },
-});
-const { value: had_covid } = useField("had_covid");
-const { value: had_antibody_test } = useField("had_antibody_test");
-const { value: test_date } = useField("antibodies.test_date");
-const { value: number } = useField("antibodies.number");
-const { value: covid_sickness_date } = useField("covid_sickness_date");
-const submitForm = handleSubmit((data) => {
-  console.log(data);
-  store.commit("setCovidquestionsData", data);
-});
+const covidOptions = [
+  { label: "კი", value: "yes" },
+  { label: "არა", value: "no" },
+  { label: "ახლა მაქვს", value: "have_right_now" },
+];
+const covidOptions2 = [
+  { label: "კი", value: "true" },
+  { label: "არა", value: "false" },
+];
+const submitForm = (values) => {
+  console.log(values);
+  store.commit("setCovidquestionsData", values);
+};
 </script>
 
 <style>

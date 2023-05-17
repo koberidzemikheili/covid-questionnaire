@@ -3,8 +3,8 @@ import { createStore } from "vuex";
 const STORAGE_KEY = "my-app-state";
 export default createStore({
   state: {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     had_covid: "",
     had_antibody_test: false,
@@ -13,8 +13,8 @@ export default createStore({
   },
   mutations: {
     setIdentificationData(state, data) {
-      state.firstName = data.name;
-      state.lastName = data.lastname;
+      state.first_name = data.name;
+      state.last_name = data.lastname;
       state.email = data.email;
     },
     setCovidquestionsData(state, data) {
