@@ -18,36 +18,32 @@
         <hr class="h-px mt-8 border-1 border-black" />
         <br />
         <div class="flex flex-wrap">
-          <form
+          <Form
             class="w-full md:w-1/3 max-w-lg flex flex-col"
-            @submit.prevent="submitForm"
-            :initial-values="setFieldValue"
+            @submit="submitForm"
           >
             <InputField
+              name="name"
               label="სახელი*"
-              id="name"
               type="text"
-              v-model="name"
-              :error="errors.name"
+              rules="required|min:2"
             />
             <InputField
-              label="გვარი*"
-              id="lastname"
+              name="lastname"
+              label="გვარი"
               type="text"
-              v-model="lastname"
-              :error="errors.lastname"
+              rules="required|min:2"
             />
             <InputField
-              label="მეილი*"
-              id="email"
+              name="email"
+              label="იმეილი*"
               type="text"
-              v-model="email"
-              :error="errors.email"
+              rules="required|redberryEmail"
             />
             <button>
               <img src="@/assets/images/Vector 2.png" alt="arrow right" />
             </button>
-          </form>
+          </Form>
 
           <div class="w-full md:w-2/3 flex justify-center">
             <img
@@ -64,46 +60,15 @@
 </template>
 
 <script setup>
+import { Form } from "vee-validate";
 import { useStore } from "vuex";
-import { useField, useForm } from "vee-validate";
-import * as yup from "yup";
-import router from "@/router";
-import InputField from "@/components/InputField.vue";
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .min(2, "მინიმუმ 2 სიმბოლო")
-    .required("შევსება სავალდებულოა"),
-  lastname: yup
-    .string()
-    .min(2, "მინიმუმ 2 სიმბოლო")
-    .required("შევსება სავალდებულოა"),
-  email: yup
-    .string()
-    .email("მონაცემი იმეილი უნდა იყოს")
-    .matches(/@redberry\.ge$/, "მეილი უნდა იყოს @redberry.ge-ით დასრულებული")
-    .required("შევსება სავალდებულოა"),
-});
+import InputField from "../components/InputField.vue";
 
 const store = useStore();
-
-const { handleSubmit, errors, setFieldValue } = useForm({
-  validationSchema: schema,
-  initialValues: {
-    name: store.getters.getIdentificationData.firstName,
-    lastname: store.getters.getIdentificationData.lastName,
-    email: store.getters.getIdentificationData.email,
-  },
-});
-const { value: name } = useField("name");
-const { value: lastname } = useField("lastname");
-const { value: email } = useField("email");
-
-const submitForm = handleSubmit((data) => {
-  store.commit("setIdentificationData", data);
-  router.push({ name: "Covidquestions" });
-});
+const submitForm = (values) => {
+  console.log(values);
+  store.commit("setIdentificationData", values);
+};
 </script>
 
 <style>

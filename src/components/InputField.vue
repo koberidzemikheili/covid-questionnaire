@@ -1,22 +1,25 @@
 <template>
   <div class="flex flex-col">
-    <label :for="id" class="font-semibold text-gray-800 mb-2 mt-4">{{
-      label
-    }}</label>
-    <input
+    <label :for="name" class="font-semibold text-gray-800 mb-2 mt-4">
+      {{ label }}
+    </label>
+    <Field
+      :name="name"
       :type="type"
-      :id="id"
-      class="border border-gray-700 border-solid bg-transparent h-8"
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :rules="rules"
+      class="bg-transparent border border-gray-500 h-10"
     />
-    <div class="text-red-600" v-if="error">{{ error }}</div>
+    <ErrorMessage :name="name" class="text-red-600" />
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
-
-defineProps(["label", "id", "type", "modelValue", "error"]);
-defineEmits(["update:modelValue"]);
+import { Field, ErrorMessage } from "vee-validate";
+import "@/Rules/rules";
+defineProps({
+  name: String,
+  label: String,
+  type: String,
+  rules: String,
+});
 </script>
