@@ -53,6 +53,7 @@
               <input
                 type="radio"
                 id="had_antibody_test_true"
+                name="had_antibody_test_true"
                 :value="true"
                 v-model="had_antibody_test"
               /><label>კი</label>
@@ -62,6 +63,7 @@
               <input
                 type="radio"
                 id="had_antibody_test_false"
+                name="had_antibody_test_false"
                 :value="false"
                 v-model="had_antibody_test"
               /><label>არა</label>
@@ -77,6 +79,9 @@
                 >
                 <input type="date" v-model="test_date" />
                 <input type="text" v-model="number" />
+                <div class="text-red-600" v-if="errors['antibodies.number']">
+                  {{ errors["antibodies.number"] }}
+                </div>
               </div>
               <div v-else>
                 <label
@@ -127,12 +132,16 @@ const schema = yup.object().shape({
     then: () => yup.string().required("შევსება სავალდებულოა"),
   }),
   antibodies: yup.object().when("had_antibody_test", {
-    is: false,
+    is: "false",
     then: () =>
       yup.object().shape({
+        number: yup.string().matches(/^[0-9]+$/, "მონაცემი უნდა იყოს რიცხვი"),
         test_date: yup.date(),
-        number: yup.string().matches(/^\d+$/, "Number must be a valid integer"),
       }),
+  }),
+  covid_sickness_date: yup.date().when("had_antibody_test", {
+    is: "false",
+    then: () => yup.date("5lari").required(),
   }),
 });
 
