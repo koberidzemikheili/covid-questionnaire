@@ -23,60 +23,33 @@
             @submit.prevent="submitForm"
             :initial-values="setFieldValue"
           >
-            <label for="had_covid" class="font-semibold text-gray-800 mb-2 mt-4"
-              >გაქვს გადატანილი covid-19?*</label
-            >
-            <input
+            <RadioField
+              label="გაქვს გადატანილი covid-19?"
+              id="had_covid"
               type="radio"
-              id="yes"
-              value="yes"
+              :options="hadCovidOptions"
               v-model="had_covid"
-            /><label>კი</label>
-            <input type="radio" id="no" value="no" v-model="had_covid" /><label
-              >არა</label
-            >
-            <input
-              type="radio"
-              id="no"
-              value="i have it now"
-              v-model="had_covid"
-            /><label>ახლა მაქვს</label>
-            <div class="text-red-600" v-if="errors.had_covid">
-              {{ errors.had_covid }}
-            </div>
+              :error="errors.had_covid"
+            />
+
             <div v-if="had_covid === 'yes'" class="flex flex-col">
-              <label
-                for="vaccine_received"
-                class="font-semibold text-gray-800 mb-2 mt-4"
-                >ანტისხეულების ტესტი გაქვს გაკეთებული?*</label
-              >
-              <input
+              <RadioField
+                label="ანტისხეულების ტესტი გაქვს გაკეთებული?"
+                id="had_antibody_test"
                 type="radio"
-                id="had_antibody_test_true"
-                name="had_antibody_test_true"
-                :value="true"
+                :options="hadAntibodyTestOptions"
                 v-model="had_antibody_test"
-              /><label>კი</label>
-              <div class="text-red-600" v-if="errors.had_covid">
-                {{ errors.had_antibody_test }}
-              </div>
-              <input
-                type="radio"
-                id="had_antibody_test_false"
-                name="had_antibody_test_false"
-                :value="false"
-                v-model="had_antibody_test"
-              /><label>არა</label>
-              <div class="text-red-600" v-if="errors.had_antibody_test">
-                {{ errors.had_antibody_test }}
-              </div>
+                :error="errors.had_antibody_test"
+              />
+
               <div v-if="had_antibody_test === false">
                 <label
                   for="test_date"
                   class="font-semibold text-gray-800 mb-2 mt-4"
-                  >თუ გახსოვს გთხოვ მიუთითე ტესტის მიახლოებული რიცხვი და
-                  ანტისხეულების რაოდენობა</label
                 >
+                  თუ გახსოვს გთხოვთ მიუთითეთ ტესტის მიახლოებული რიცხვი და
+                  ანტისხეულების რაოდენობა
+                </label>
                 <input type="date" v-model="test_date" />
                 <input type="text" v-model="number" />
                 <div class="text-red-600" v-if="errors['antibodies.number']">
@@ -87,9 +60,10 @@
                 <label
                   for="test_date"
                   class="font-semibold text-gray-800 mb-2 mt-4"
-                  >თუ გახსოვს გთხოვ მიუთითე ტესტის მიახლოებული რიცხვი და
-                  ანტისხეულების რაოდენობა</label
                 >
+                  მიუთითეთ მიახლოებითი პერიოდი (თვე/დღე/წელი) როდის გქონდა
+                  covid-19*
+                </label>
                 <input
                   type="date"
                   id="covid_sickness_date"
@@ -124,6 +98,18 @@
 import { useStore } from "vuex";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
+import RadioField from "@/components/RadioField.vue";
+
+const hadCovidOptions = [
+  { value: "yes", label: "კი" },
+  { value: "no", label: "არა" },
+  { value: "i have it now", label: "ახლა მაქვს" },
+];
+
+const hadAntibodyTestOptions = [
+  { value: true, label: "კი" },
+  { value: false, label: "არა" },
+];
 
 const schema = yup.object().shape({
   had_covid: yup.string().required("შევსება სავალდებულოა"),
@@ -141,7 +127,8 @@ const schema = yup.object().shape({
   }),
   covid_sickness_date: yup.date().when("had_antibody_test", {
     is: "false",
-    then: () => yup.date("5lari").required(),
+    then: () => yup.date().nullable(),
+    otherwise: () => yup.date().required("შევსება სავალდებულოა"),
   }),
 });
 

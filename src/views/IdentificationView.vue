@@ -23,40 +23,27 @@
             @submit.prevent="submitForm"
             :initial-values="setFieldValue"
           >
-            <label for="name" class="font-semibold text-gray-800 mb-2 mt-4"
-              >სახელი*</label
-            >
-            <input
-              type="text"
+            <InputField
+              label="სახელი*"
               id="name"
-              class="border border-gray-700 border-solid bg-transparent h-8"
+              type="text"
               v-model="name"
+              :error="errors.name"
             />
-            <div class="text-red-600" v-if="errors.name">{{ errors.name }}</div>
-            <label for="lastname" class="font-semibold text-gray-800 mb-2 mt-4"
-              >გვარი*</label
-            >
-            <input
-              type="text"
+            <InputField
+              label="გვარი*"
               id="lastname"
-              class="border border-gray-700 border-solid bg-transparent h-8"
-              v-model="lastname"
-            />
-            <div class="text-red-600" v-if="errors.lastname">
-              {{ errors.lastname }}
-            </div>
-            <label for="email" class="font-semibold text-gray-800 mb-2 mt-4"
-              >მეილი*</label
-            >
-            <input
               type="text"
-              id="email"
-              class="border border-gray-700 border-solid bg-transparent h-8"
-              v-model="email"
+              v-model="lastname"
+              :error="errors.lastname"
             />
-            <div class="text-red-600" v-if="errors.email">
-              {{ errors.email }}
-            </div>
+            <InputField
+              label="მეილი*"
+              id="email"
+              type="text"
+              v-model="email"
+              :error="errors.email"
+            />
             <button>
               <img src="@/assets/images/Vector 2.png" alt="arrow right" />
             </button>
@@ -81,6 +68,7 @@ import { useStore } from "vuex";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
 import router from "@/router";
+import InputField from "@/components/InputField.vue";
 
 const schema = yup.object().shape({
   name: yup
@@ -94,6 +82,7 @@ const schema = yup.object().shape({
   email: yup
     .string()
     .email("მონაცემი იმეილი უნდა იყოს")
+    .matches(/@redberry\.ge$/, "მეილი უნდა იყოს @redberry.ge-ით დასრულებული")
     .required("შევსება სავალდებულოა"),
 });
 
