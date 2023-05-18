@@ -37,17 +37,17 @@
                 :options="covidOptions2"
                 type="radio"
                 name="had_antibody_test"
-                rules="required"
+                rules="requiredboolean"
                 v-model="hadantibodytest"
               />
             </div>
-            <div v-if="hadantibodytest === 'true'">
+            <div v-if="hadantibodytest === true">
               <Field type="date" name="covid_sickness_date" rules="required" />
               <div>
                 <ErrorMessage name="covid_sickness_date" class="text-red-600" />
               </div>
             </div>
-            <div v-if="hadantibodytest === 'false'">
+            <div v-if="hadantibodytest === false">
               <div>
                 <label
                   >თუ გახსოვს, გთხოვ მიუთითე ტესტის მიახლოებითი რიცხვი და
@@ -109,8 +109,8 @@ const covidOptions = [
   { label: "ახლა მაქვს", value: "have_right_now" },
 ];
 const covidOptions2 = [
-  { label: "კი", value: "true" },
-  { label: "არა", value: "false" },
+  { label: "კი", value: true },
+  { label: "არა", value: false },
 ];
 const submitForm = (values) => {
   console.log(values);
@@ -118,7 +118,7 @@ const submitForm = (values) => {
 };
 </script>
 
-<style>
+<style scoped>
 .overlay {
   position: fixed;
   top: 0;
