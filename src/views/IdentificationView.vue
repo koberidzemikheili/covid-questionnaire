@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="yellow-overlay"></div>
     <div>
-      <div class="mx-32 mt-10 py-10">
+      <div class="mx-32 mt-10 py-10 min-w-full">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -18,48 +18,32 @@
         <hr class="h-px mt-8 border-1 border-black" />
         <br />
         <div class="flex flex-wrap">
-          <form
+          <Form
             class="w-full md:w-1/3 max-w-lg flex flex-col"
-            @submit.prevent="submitForm"
+            @submit="submitForm"
           >
-            <label for="name" class="font-semibold text-gray-800 mb-2 mt-4"
-              >სახელი*</label
-            >
-            <input
+            <InputField
+              name="name"
+              label="სახელი*"
               type="text"
-              id="name"
-              class="border border-gray-700 border-solid bg-transparent h-8"
-              v-model="name"
+              rules="required|min:2"
             />
-            <div class="text-red-600" v-if="errors.name">{{ errors.name }}</div>
-            <label for="lastname" class="font-semibold text-gray-800 mb-2 mt-4"
-              >გვარი*</label
-            >
-            <input
+            <InputField
+              name="lastname"
+              label="გვარი"
               type="text"
-              id="lastname"
-              class="border border-gray-700 border-solid bg-transparent h-8"
-              v-model="lastname"
+              rules="required|min:2"
             />
-            <div class="text-red-600" v-if="errors.lastname">
-              {{ errors.lastname }}
-            </div>
-            <label for="email" class="font-semibold text-gray-800 mb-2 mt-4"
-              >მეილი*</label
-            >
-            <input
+            <InputField
+              name="email"
+              label="იმეილი*"
               type="text"
-              id="email"
-              class="border border-gray-700 border-solid bg-transparent h-8"
-              v-model="email"
+              rules="required|redberryEmail"
             />
-            <div class="text-red-600" v-if="errors.email">
-              {{ errors.email }}
-            </div>
             <button>
               <img src="@/assets/images/Vector 2.png" alt="arrow right" />
             </button>
-          </form>
+          </Form>
 
           <div class="w-full md:w-2/3 flex justify-center">
             <img
@@ -76,34 +60,17 @@
 </template>
 
 <script setup>
+import { Form } from "vee-validate";
 import { useStore } from "vuex";
-import { useField, useForm } from "vee-validate";
-import * as yup from "yup";
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .min(2, "მინიმუმ 2 სიმბოლო")
-    .required("შევსება სავალდებულოა"),
-  lastname: yup
-    .string()
-    .min(2, "მინიმუმ 2 სიმბოლო")
-    .required("შევსება სავალდებულოა"),
-  email: yup
-    .string()
-    .email("მონაცემი იმეილი უნდა იყოს")
-    .required("შევსება სავალდებულოა"),
-});
+import router from "@/router";
+import InputField from "@/components/InputField.vue";
 
 const store = useStore();
-const { handleSubmit, errors } = useForm({ validationSchema: schema });
-const { value: name } = useField("name");
-const { value: lastname } = useField("lastname");
-const { value: email } = useField("email");
-
-const submitForm = handleSubmit((data) => {
-  store.commit("setIdentificationData", data);
-});
+const submitForm = (values) => {
+  console.log(values);
+  store.commit("setIdentificationData", values);
+  router.push({ name: "Covidquestions" });
+};
 </script>
 
 <style>
@@ -137,7 +104,7 @@ const submitForm = handleSubmit((data) => {
     height: 100px;
   }
   100% {
-    transform: translate(-5%, -450%);
+    transform: translate(-5%, -425%);
     width: 400px;
     height: 50px;
   }
