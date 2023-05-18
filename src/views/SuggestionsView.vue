@@ -1,0 +1,110 @@
+<template>
+  <div class="overlay">
+    <div class="yellow-overlay"></div>
+    <div>
+      <div class="mx-32 mt-10 py-10 min-w-full">
+        <div class="mb-10">
+          <img
+            src="@/assets/images/redberry.png"
+            alt="Left image"
+            class="float-left"
+          />
+          <img
+            src="@/assets/images/right1.png"
+            alt="Right image"
+            class="float-right"
+          />
+        </div>
+        <hr class="h-px mt-8 border-1 border-black" />
+        <br />
+        <div class="flex flex-wrap">
+          <Form
+            class="w-full md:w-1/3 max-w-lg flex flex-col"
+            @submit="submitForm"
+          >
+            <RadioField
+              label="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?**"
+              :options="SuggestpatternOptions"
+              type="radio"
+              name="non_formal_meetings"
+              rules="required"
+            />
+            <RadioField
+              label="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?***"
+              :options="SuggestdaysOptions"
+              type="radio"
+              name="number_of_days_from_office"
+              rules="required"
+            />
+            <InputField
+              label="რას ფიქრობ ფიზიკურ შეკრებებზე?"
+              type="textarea"
+              name="what_about_meetings_in_live"
+              rules="mustbestring"
+              addclass="h-32"
+              as="textarea"
+            />
+            <InputField
+              label="რას ფიქრობ არსებულ გარემოზე: 
+                რა მოგწონს, რას დაამატებდი, რას შეცვლიდი??"
+              type="textarea"
+              name="tell_us_your_opinion_about_us"
+              rules="mustbestring"
+              addclass="h-32"
+              as="textarea"
+            />
+            <button>
+              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
+            </button>
+          </Form>
+
+          <div class="w-full md:w-2/3 flex justify-center">
+            <img
+              src="@/assets/images/scan2.png"
+              alt="main image"
+              class="relative bottom-28"
+            />
+          </div>
+          <div class="w-full flex justify-center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { Form } from "vee-validate";
+import { useStore } from "vuex";
+//import router from "@/router";
+import RadioField from "../components/RadioField.vue";
+import InputField from "../components/InputField.vue";
+const SuggestpatternOptions = [
+  {
+    label: "კვირაში ორჯერ",
+    value: "twice_a_week",
+  },
+  { label: "კვირაში ერთხელ", value: "once_a_week" },
+  {
+    label: "ორ კვირაში ერთხელ",
+    value: "once_in_a_two_weeks",
+  },
+  {
+    label: "თვეში ერთხელ",
+    value: "once_in_a_month",
+  },
+];
+const SuggestdaysOptions = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+];
+
+const store = useStore();
+const submitForm = (values) => {
+  store.commit("setSuggestionsData", values);
+  //router.push({ name: "Covidquestions" });
+  store.dispatch("sendDataToServer");
+};
+</script>
