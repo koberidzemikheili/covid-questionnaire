@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label>{{ label }}</label>
+    <label class="font-semibold text-gray-800 mb-2 mt-4">{{ label }}</label>
     <div v-for="(option, index) in options" :key="index">
       <Field
         :type="type"
@@ -20,13 +20,13 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import { defineProps } from "vue";
-
+import "@/Rules/rules";
 defineProps({
   label: { type: String, required: true },
   options: { type: Array, required: true },
   type: { type: String, required: true },
   name: { type: String, required: true },
   rules: { type: String, required: true },
-  modelValue: { required: true },
+  modelValue: { type: [String, Boolean], required: false },
 });
 </script>

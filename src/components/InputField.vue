@@ -6,8 +6,9 @@
     <Field
       :name="name"
       :type="type"
+      :as="as"
       :rules="rules"
-      class="bg-transparent border border-gray-500 h-10"
+      :class="['bg-transparent', 'border', 'border-gray-500', 'h-10', addclass]"
     />
     <ErrorMessage :name="name" class="text-red-600" />
   </div>
@@ -21,5 +22,7 @@ defineProps({
   label: { type: String, required: true },
   type: { type: String, required: true },
   rules: { type: String, required: true },
+  addclass: { type: String, required: false },
+  as: { type: String, required: false },
 });
 </script>
