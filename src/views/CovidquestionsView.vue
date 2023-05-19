@@ -37,17 +37,17 @@
                 :options="covidOptions2"
                 type="radio"
                 name="had_antibody_test"
-                rules="required"
+                rules="requiredboolean"
                 v-model="hadantibodytest"
               />
             </div>
-            <div v-if="hadantibodytest === 'true'">
+            <div v-if="hadantibodytest === true">
               <Field type="date" name="covid_sickness_date" rules="required" />
               <div>
                 <ErrorMessage name="covid_sickness_date" class="text-red-600" />
               </div>
             </div>
-            <div v-if="hadantibodytest === 'false'">
+            <div v-if="hadantibodytest === false">
               <div>
                 <label
                   >თუ გახსოვს, გთხოვ მიუთითე ტესტის მიახლოებითი რიცხვი და
@@ -76,7 +76,7 @@
               </div>
             </div>
             <button>
-              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
+              <IconRightArrow />
             </button>
           </Form>
 
@@ -98,6 +98,8 @@
 import { useStore } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ref } from "vue";
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import router from "@/router";
 import "@/Rules/rules";
 import RadioField from "../components/RadioField.vue";
 const hadCovid = ref("");
@@ -109,16 +111,16 @@ const covidOptions = [
   { label: "ახლა მაქვს", value: "have_right_now" },
 ];
 const covidOptions2 = [
-  { label: "კი", value: "true" },
-  { label: "არა", value: "false" },
+  { label: "კი", value: true },
+  { label: "არა", value: false },
 ];
 const submitForm = (values) => {
-  console.log(values);
   store.commit("setCovidquestionsData", values);
+  router.push({ name: "VaccineQuestions" });
 };
 </script>
 
-<style>
+<style scoped>
 .overlay {
   position: fixed;
   top: 0;

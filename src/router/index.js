@@ -13,9 +13,19 @@ const router = createRouter({
       component: () => import("../views/IdentificationView.vue"),
     },
     {
-      path: "/covidquestions",
-      name: "Covidquestions",
+      path: "/covid-questions",
+      name: "CovidQuestions",
       component: () => import("../views/CovidquestionsView.vue"),
+    },
+    {
+      path: "/vaccine-questions",
+      name: "VaccineQuestions",
+      component: () => import("../views/VaccinequestionsView.vue"),
+    },
+    {
+      path: "/suggestions",
+      name: "Suggestions",
+      component: () => import("../views/SuggestionsView.vue"),
     },
   ],
 });

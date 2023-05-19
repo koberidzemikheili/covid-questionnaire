@@ -11,10 +11,28 @@ defineRule("redberryEmail", (value) => {
 });
 defineRule("numeric", (value) => {
   if (value === null || value === undefined || value === "") {
-    return true; // The field is considered valid if it is empty
+    return true;
   }
   if (!/^\d+$/.test(value)) {
     return "სავალდებულოა რომ რიცხვით იყოს.";
+  }
+  return true;
+});
+defineRule("mustbestring", (value) => {
+  if (value === null || value === undefined || value === "") {
+    return true;
+  }
+  if (typeof value !== "string") {
+    return "სავალდებულოა ტექსტური მნიშვნელობა იყოს.";
+  }
+  return true;
+});
+defineRule("requiredboolean", (value) => {
+  if (value === false) {
+    return true;
+  }
+  if (value === null || value === undefined || value === "") {
+    return "შევსება აუცილებელია";
   }
   return true;
 });
@@ -25,6 +43,7 @@ configure({
       min: `უნდა შეიცავდეს მინიმუმ ${rule.params.length} სიმბოლოს.`,
       redberryEmail: "მეილი უნდა მთავრდებოდეს @redberry.ge დაბოლოებით",
       numeric: "შეყვანილი მოაცემი უნდა იყოს რიცხვი",
+      mustbestring: "შეყვანილი მონაცემი უნდა იყოს ტექსტი",
     };
 
     return messages[rule.name] || "Invalid field.";
