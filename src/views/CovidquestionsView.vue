@@ -76,7 +76,7 @@
               </div>
             </div>
             <button>
-              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
+              <IconRightArrow />
             </button>
           </Form>
 
@@ -98,6 +98,8 @@
 import { useStore } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ref } from "vue";
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import router from "@/router";
 import "@/Rules/rules";
 import RadioField from "../components/RadioField.vue";
 const hadCovid = ref("");
@@ -113,8 +115,8 @@ const covidOptions2 = [
   { label: "არა", value: false },
 ];
 const submitForm = (values) => {
-  console.log(values);
   store.commit("setCovidquestionsData", values);
+  router.push({ name: "VaccineQuestions" });
 };
 </script>
 

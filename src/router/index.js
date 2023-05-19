@@ -13,13 +13,13 @@ const router = createRouter({
       component: () => import("../views/IdentificationView.vue"),
     },
     {
-      path: "/covidquestions",
-      name: "Covidquestions",
+      path: "/covid-questions",
+      name: "CovidQuestions",
       component: () => import("../views/CovidquestionsView.vue"),
     },
     {
-      path: "/vaccinequestions",
-      name: "Vaccinequestions",
+      path: "/vaccine-questions",
+      name: "VaccineQuestions",
       component: () => import("../views/VaccinequestionsView.vue"),
     },
     {

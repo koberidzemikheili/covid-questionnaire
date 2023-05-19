@@ -41,7 +41,7 @@
               rules="required|redberryEmail"
             />
             <button>
-              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
+              <IconRightArrow />
             </button>
           </Form>
 
@@ -63,13 +63,13 @@
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import router from "@/router";
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 import InputField from "@/components/InputField.vue";
 
 const store = useStore();
 const submitForm = (values) => {
-  console.log(values);
   store.commit("setIdentificationData", values);
-  router.push({ name: "Covidquestions" });
+  router.push({ name: "CovidQuestions" });
 };
 </script>
 

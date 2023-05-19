@@ -86,7 +86,7 @@
               </div>
             </div>
             <button>
-              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
+              <IconRightArrow />
             </button>
           </Form>
 
@@ -107,9 +107,10 @@
 <script setup>
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
-//import router from "@/router";
+import router from "@/router";
 import { ref } from "vue";
 import RadioField from "../components/RadioField.vue";
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 const had_vaccine = ref();
 const vaccination_stage = ref("");
 const i_am_waiting = ref("");
@@ -143,7 +144,7 @@ const i_am_waitingOptions = [
 
 const store = useStore();
 const submitForm = (values) => {
-  console.log(values);
   store.commit("setVaccinequestionsData", values);
+  router.push({ name: "Suggestions" });
 };
 </script>

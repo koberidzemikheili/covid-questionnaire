@@ -24,14 +24,14 @@
           >
             <RadioField
               label="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?**"
-              :options="SuggestpatternOptions"
+              :options="SuggestPatternOptions"
               type="radio"
               name="non_formal_meetings"
               rules="required"
             />
             <RadioField
               label="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?***"
-              :options="SuggestdaysOptions"
+              :options="SuggestDaysOptions"
               type="radio"
               name="number_of_days_from_office"
               rules="required"
@@ -54,7 +54,7 @@
               as="textarea"
             />
             <button>
-              <img src="@/assets/images/Vector 2.png" alt="arrow right" />
+              <IconRightArrow />
             </button>
           </Form>
 
@@ -75,10 +75,10 @@
 <script setup>
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
-//import router from "@/router";
 import RadioField from "../components/RadioField.vue";
 import InputField from "../components/InputField.vue";
-const SuggestpatternOptions = [
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+const SuggestPatternOptions = [
   {
     label: "კვირაში ორჯერ",
     value: "twice_a_week",
@@ -93,7 +93,7 @@ const SuggestpatternOptions = [
     value: "once_in_a_month",
   },
 ];
-const SuggestdaysOptions = [
+const SuggestDaysOptions = [
   { label: "1", value: 1 },
   { label: "2", value: 2 },
   { label: "3", value: 3 },
@@ -104,7 +104,6 @@ const SuggestdaysOptions = [
 const store = useStore();
 const submitForm = (values) => {
   store.commit("setSuggestionsData", values);
-  //router.push({ name: "Covidquestions" });
   store.dispatch("sendDataToServer");
 };
 </script>
