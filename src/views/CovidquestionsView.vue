@@ -41,13 +41,13 @@
                 v-model="hadantibodytest"
               />
             </div>
-            <div v-if="hadantibodytest === true">
+            <div v-if="hadantibodytest === false">
               <Field type="date" name="covid_sickness_date" rules="required" />
               <div>
                 <ErrorMessage name="covid_sickness_date" class="text-red-600" />
               </div>
             </div>
-            <div v-if="hadantibodytest === false">
+            <div v-if="hadantibodytest === true">
               <div>
                 <label
                   >თუ გახსოვს, გთხოვ მიუთითე ტესტის მიახლოებითი რიცხვი და

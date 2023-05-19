@@ -148,3 +148,39 @@ const submitForm = (values) => {
   router.push({ name: "Suggestions" });
 };
 </script>
+<style scoped>
+.overlay {
+  position: relative;
+  display: flex;
+}
+
+.yellow-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background-color: yellow;
+  opacity: 0.5;
+}
+
+@keyframes move-overlay {
+  0% {
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+  }
+  100% {
+    transform: translate(-5%, -425%);
+    width: 400px;
+    height: 50px;
+  }
+}
+
+.yellow-overlay {
+  animation: move-overlay 0.6s ease-in-out forwards;
+  width: 400px;
+  height: 50px;
+}
+</style>

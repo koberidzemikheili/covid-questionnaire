@@ -22,6 +22,16 @@
             class="w-full md:w-1/3 max-w-lg flex flex-col"
             @submit="submitForm"
           >
+            <div class="mb-5">
+              რედბერის მთავარი ღირებულება ჩვენი გუნდის თითოეული წევრია. გარემო,
+              რომელსაც ჩვენი თანამშრომლები ქმნით, ბევრისთვის არის და ყოფილა
+              წლების განმავლობაში მიზნებისთვის ერთად ბრძოლის მიზეზი, ბევრისთვის
+              კი — ჩვენთან გადმოსვლის.
+            </div>
+            <div class="mb-5">
+              პანდემიის პერიოდში ერთმანეთსაც იშვიათად ვნახულობთ პირისპირ და
+              ყოველდღიური კომუნიკაციაც გაიშვიათდა.
+            </div>
             <RadioField
               label="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?**"
               :options="SuggestPatternOptions"
@@ -57,7 +67,6 @@
               <IconRightArrow />
             </button>
           </Form>
-
           <div class="w-full md:w-2/3 flex justify-center">
             <img
               src="@/assets/images/scan2.png"
@@ -107,3 +116,40 @@ const submitForm = (values) => {
   store.dispatch("sendDataToServer");
 };
 </script>
+
+<style scoped>
+.overlay {
+  position: relative;
+  display: flex;
+}
+
+.yellow-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background-color: yellow;
+  opacity: 0.5;
+}
+
+@keyframes move-overlay {
+  0% {
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+  }
+  100% {
+    transform: translate(-5%, -425%);
+    width: 400px;
+    height: 50px;
+  }
+}
+
+.yellow-overlay {
+  animation: move-overlay 0.6s ease-in-out forwards;
+  width: 400px;
+  height: 50px;
+}
+</style>

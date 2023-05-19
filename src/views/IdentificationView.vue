@@ -26,13 +26,13 @@
               name="name"
               label="სახელი*"
               type="text"
-              rules="required|min:2"
+              rules="required|min:3"
             />
             <InputField
               name="lastname"
               label="გვარი"
               type="text"
-              rules="required|min:2"
+              rules="required|min:3"
             />
             <InputField
               name="email"

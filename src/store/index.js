@@ -55,6 +55,7 @@ export default createStore({
     async sendDataToServer() {
       try {
         const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        console.log(savedState);
         const response = await axios.post(
           "https://covid19.devtest.ge/api/create",
           savedState
