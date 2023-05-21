@@ -5,17 +5,17 @@ import { RouterView } from "vue-router";
 <template>
   <div>
     <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
+      <transition name="fade" mode="in-out">
         <component :is="Component" />
       </transition>
     </router-view>
   </div>
 </template>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 .fade-enter,
 .fade-leave-to {

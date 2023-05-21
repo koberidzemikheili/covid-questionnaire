@@ -1,8 +1,8 @@
 <template>
   <div class="overlay">
     <div class="red-overlay"></div>
-    <div>
-      <div class="mx-32 mt-10 py-10 min-w-full">
+    <div class="w-full">
+      <div class="mx-24 mt-28">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -10,7 +10,7 @@
             class="float-left"
           />
           <img
-            src="@/assets/images/4.png"
+            src="@/assets/images/right1.png"
             alt="Right image"
             class="float-right"
           />
@@ -19,8 +19,9 @@
         <br />
         <div class="flex flex-wrap">
           <Form
-            class="w-full md:w-1/3 max-w-lg flex flex-col"
+            class="w-1/3 block"
             @submit="submitForm"
+            id="CovidQuestionsForm"
           >
             <RadioField
               label="გაქვს გადატანილი covid-19?*"
@@ -75,19 +76,22 @@
                 <ErrorMessage name="antibodies.number" class="text-red-600" />
               </div>
             </div>
-            <button>
-              <IconRightArrow />
-            </button>
           </Form>
-
           <div class="w-full md:w-2/3 flex justify-center">
             <img
               src="@/assets/images/vaccinate2.png"
               alt="main image"
-              class="relative top-6"
+              class="relative bottom-16"
             />
           </div>
-          <div class="w-full flex justify-center"></div>
+          <div class="w-full flex justify-center mb-24">
+            <button @click="Previous" class="content">
+              <IconLeftArrow />
+            </button>
+            <button type="submit" form="CovidQuestionsForm" class="content">
+              <IconRightArrow />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -99,6 +103,7 @@ import { useStore } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ref } from "vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import router from "@/router";
 import "@/Rules/rules";
 import RadioField from "../components/RadioField.vue";
@@ -118,26 +123,19 @@ const submitForm = (values) => {
   store.commit("setCovidquestionsData", values);
   router.push({ name: "VaccineQuestions" });
 };
+const Previous = () => {
+  router.push({ name: "Identification" });
+};
 </script>
 
 <style scoped>
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .red-overlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;
   background-color: yellow;
@@ -146,12 +144,13 @@ const submitForm = (values) => {
 
 @keyframes move-overlay {
   0% {
-    transform: translate(-5%, -425%);
+    transform: translate(955px, 270px);
     width: 400px;
     height: 50px;
+    border-radius: 0%;
   }
   100% {
-    transform: translate(-50%, -50%);
+    transform: translate(780px, 325px);
     width: 200px;
     height: 200px;
     border-radius: 50%;

@@ -1,8 +1,8 @@
 <template>
   <div class="overlay">
-    <div class="yellow-overlay"></div>
-    <div>
-      <div class="mx-32 mt-10 py-10 min-w-full">
+    <div class="shape-transition" :class="{ 'heart-shape': isHeart }"></div>
+    <div class="w-full">
+      <div class="mx-24 mt-28">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -18,10 +18,7 @@
         <hr class="h-px mt-8 border-1 border-black" />
         <br />
         <div class="flex flex-wrap">
-          <Form
-            class="w-full md:w-1/3 max-w-lg flex flex-col"
-            @submit="submitForm"
-          >
+          <Form class="w-1/3 block" @submit="submitForm">
             <div class="mb-5">
               რედბერის მთავარი ღირებულება ჩვენი გუნდის თითოეული წევრია. გარემო,
               რომელსაც ჩვენი თანამშრომლები ქმნით, ბევრისთვის არის და ყოფილა
@@ -63,18 +60,24 @@
               addclass="h-32"
               as="textarea"
             />
-            <button>
-              <IconRightArrow />
+            <button
+              class="bg-blue-500 px-4 py-2 rounded-3xl text-white float-right mt-12"
+            >
+              დასრულება
             </button>
           </Form>
           <div class="w-full md:w-2/3 flex justify-center">
             <img
-              src="@/assets/images/scan2.png"
+              src="@/assets/images/office.png"
               alt="main image"
-              class="relative bottom-28"
+              class="relative w-2/3 h-2/3"
             />
           </div>
-          <div class="w-full flex justify-center"></div>
+          <div class="w-full flex justify-center mb-24">
+            <button type="submit" form="VaccineQuestionsForm" class="content">
+              <IconLeftArrow />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -86,7 +89,15 @@ import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import RadioField from "../components/RadioField.vue";
 import InputField from "../components/InputField.vue";
-import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
+import { ref, onMounted } from "vue";
+const isHeart = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    isHeart.value = true;
+  }, 600);
+});
 const SuggestPatternOptions = [
   {
     label: "კვირაში ორჯერ",
@@ -123,33 +134,37 @@ const submitForm = (values) => {
   display: flex;
 }
 
-.yellow-overlay {
+.shape-transition {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;
-  background-color: yellow;
+  background-color: gold;
   opacity: 0.5;
+  animation: transition-circle-to-heart 0.6s ease-in-out forwards;
 }
 
-@keyframes move-overlay {
+@keyframes transition-circle-to-heart {
   0% {
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    clip-path: polygon(
+      50% 0%,
+      60.5% 34.4%,
+      94.5% 34.4%,
+      66.7% 55.6%,
+      77.2% 89.6%,
+      50% 70.7%,
+      22.8% 89.6%,
+      33.3% 55.6%,
+      5.5% 34.4%,
+      39.5% 34.4%
+    );
+    transform: rotate(10deg) translate(690px, -80px);
   }
   100% {
-    transform: translate(-5%, -425%);
-    width: 400px;
-    height: 50px;
+    clip-path: path(
+      "M96 31.992c-25.428-43.848-96-31.104-96 19.104 0 30.294 36.132 61.278 96 105.216 59.868-43.938 96-74.922 96-105.216 0-50.208-70.572-62.856-96-19.104z"
+    );
+    transform: translate(900px, 200px);
+    background-color: red;
   }
-}
-
-.yellow-overlay {
-  animation: move-overlay 0.6s ease-in-out forwards;
-  width: 400px;
-  height: 50px;
 }
 </style>

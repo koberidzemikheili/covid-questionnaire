@@ -1,8 +1,8 @@
 <template>
   <div class="overlay">
-    <div class="yellow-overlay"></div>
-    <div>
-      <div class="mx-32 mt-10 py-10 min-w-full">
+    <div class="shape-transition" :class="{ 'star-shape': isStar }"></div>
+    <div class="w-full">
+      <div class="mx-24 mt-28">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -19,8 +19,9 @@
         <br />
         <div class="flex flex-wrap">
           <Form
-            class="w-full md:w-1/3 max-w-lg flex flex-col"
+            class="w-1/3 block"
             @submit="submitForm"
+            id="VaccineQuestionsForm"
           >
             <RadioField
               label="უკვე აცრილი ხარ ?*"
@@ -85,19 +86,22 @@
                 >
               </div>
             </div>
-            <button>
-              <IconRightArrow />
-            </button>
           </Form>
-
           <div class="w-full md:w-2/3 flex justify-center">
             <img
-              src="@/assets/images/scan2.png"
+              src="@/assets/images/doctor2.png"
               alt="main image"
-              class="relative bottom-28"
+              class="relative bottom-16"
             />
           </div>
-          <div class="w-full flex justify-center"></div>
+          <div class="w-full flex justify-center mb-24">
+            <button @click="Previous" class="content">
+              <IconLeftArrow />
+            </button>
+            <button type="submit" form="VaccineQuestionsForm" class="content">
+              <IconRightArrow />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -108,12 +112,20 @@
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import router from "@/router";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import RadioField from "../components/RadioField.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 const had_vaccine = ref();
 const vaccination_stage = ref("");
 const i_am_waiting = ref("");
+const isStar = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    isStar.value = true;
+  }, 600);
+});
 
 const VaccineOptions = [
   { label: "კი", value: true },
@@ -147,6 +159,9 @@ const submitForm = (values) => {
   store.commit("setVaccinequestionsData", values);
   router.push({ name: "Suggestions" });
 };
+const Previous = () => {
+  router.push({ name: "CovidQuestions" });
+};
 </script>
 <style scoped>
 .overlay {
@@ -154,33 +169,39 @@ const submitForm = (values) => {
   display: flex;
 }
 
-.yellow-overlay {
+.shape-transition {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;
-  background-color: yellow;
+  background-color: gold;
   opacity: 0.5;
+  animation: transition-circle-to-star 0.6s ease-in-out forwards;
 }
 
-@keyframes move-overlay {
+.star-shape {
+  clip-path: circle(50%);
+}
+
+@keyframes transition-circle-to-star {
   0% {
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    clip-path: circle(50%);
+    transform: translate(955px, 270px);
+    background-color: red;
   }
   100% {
-    transform: translate(-5%, -425%);
-    width: 400px;
-    height: 50px;
+    clip-path: polygon(
+      50% 0%,
+      60.5% 34.4%,
+      94.5% 34.4%,
+      66.7% 55.6%,
+      77.2% 89.6%,
+      50% 70.7%,
+      22.8% 89.6%,
+      33.3% 55.6%,
+      5.5% 34.4%,
+      39.5% 34.4%
+    );
+    transform: rotate(10deg) scale(1.2) translate(690px, -80px);
   }
-}
-
-.yellow-overlay {
-  animation: move-overlay 0.6s ease-in-out forwards;
-  width: 400px;
-  height: 50px;
 }
 </style>
