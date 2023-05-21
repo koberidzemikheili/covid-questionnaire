@@ -46,9 +46,9 @@ export default createStore({
     },
   },
   getters: {
-    getIdentificationData: (state) => {
+    getIdentificationData: () => {
       const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      return savedState || state;
+      return savedState || false;
     },
   },
   actions: {

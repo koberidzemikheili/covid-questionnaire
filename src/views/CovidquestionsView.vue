@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="red-overlay"></div>
     <div class="w-full">
-      <div class="mx-24 mt-28">
+      <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -22,6 +22,7 @@
             class="w-1/3 block"
             @submit="submitForm"
             id="CovidQuestionsForm"
+            :initialValues="initialFormValues"
           >
             <RadioField
               label="გაქვს გადატანილი covid-19?*"
@@ -70,7 +71,7 @@
                 type="text"
                 name="antibodies.number"
                 rules="numeric"
-                class="bg-transparent"
+                class="bg-transparent border border-gray-500"
               />
               <div>
                 <ErrorMessage name="antibodies.number" class="text-red-600" />
@@ -85,7 +86,7 @@
             />
           </div>
           <div class="w-full flex justify-center mb-24">
-            <button @click="Previous" class="content">
+            <button @click="Previous" class="content mr-20">
               <IconLeftArrow />
             </button>
             <button type="submit" form="CovidQuestionsForm" class="content">
@@ -107,9 +108,12 @@ import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import router from "@/router";
 import "@/Rules/rules";
 import RadioField from "../components/RadioField.vue";
-const hadCovid = ref("");
-const hadantibodytest = ref();
 const store = useStore();
+const hadCovid = ref(store.getters.getIdentificationData.had_covid);
+const hadantibodytest = ref(
+  store.getters.getIdentificationData.had_antibody_test
+);
+
 const covidOptions = [
   { label: "კი", value: "yes" },
   { label: "არა", value: "no" },
@@ -119,6 +123,10 @@ const covidOptions2 = [
   { label: "კი", value: true },
   { label: "არა", value: false },
 ];
+const initialFormValues = {
+  covid_sickness_date: store.getters.getIdentificationData.covid_sickness_date,
+  antibodies: store.getters.getIdentificationData.antibodies,
+};
 const submitForm = (values) => {
   store.commit("setCovidquestionsData", values);
   router.push({ name: "VaccineQuestions" });

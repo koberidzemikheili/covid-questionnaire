@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="shape-transition" :class="{ 'heart-shape': isHeart }"></div>
     <div class="w-full">
-      <div class="mx-24 mt-28">
+      <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -74,7 +74,7 @@
             />
           </div>
           <div class="w-full flex justify-center mb-24">
-            <button type="submit" form="VaccineQuestionsForm" class="content">
+            <button @click="Previous" class="content mr-20">
               <IconLeftArrow />
             </button>
           </div>
@@ -89,6 +89,7 @@ import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import RadioField from "../components/RadioField.vue";
 import InputField from "../components/InputField.vue";
+import router from "@/router";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import { ref, onMounted } from "vue";
 const isHeart = ref(false);
@@ -125,6 +126,9 @@ const store = useStore();
 const submitForm = (values) => {
   store.commit("setSuggestionsData", values);
   store.dispatch("sendDataToServer");
+};
+const Previous = () => {
+  router.push({ name: "VaccineQuestions" });
 };
 </script>
 

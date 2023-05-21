@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="shape-transition" :class="{ 'star-shape': isStar }"></div>
     <div class="w-full">
-      <div class="mx-24 mt-28">
+      <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -95,7 +95,7 @@
             />
           </div>
           <div class="w-full flex justify-center mb-24">
-            <button @click="Previous" class="content">
+            <button @click="Previous" class="content mr-20">
               <IconLeftArrow />
             </button>
             <button type="submit" form="VaccineQuestionsForm" class="content">
@@ -116,9 +116,12 @@ import { ref, onMounted } from "vue";
 import RadioField from "../components/RadioField.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
-const had_vaccine = ref();
-const vaccination_stage = ref("");
-const i_am_waiting = ref("");
+const store = useStore();
+const had_vaccine = ref(store.getters.getIdentificationData.had_vaccine);
+const vaccination_stage = ref(
+  store.getters.getIdentificationData.vaccination_stage
+);
+const i_am_waiting = ref(store.getters.getIdentificationData.i_am_waiting);
 const isStar = ref(false);
 
 onMounted(() => {
@@ -154,7 +157,6 @@ const i_am_waitingOptions = [
   },
 ];
 
-const store = useStore();
 const submitForm = (values) => {
   store.commit("setVaccinequestionsData", values);
   router.push({ name: "Suggestions" });

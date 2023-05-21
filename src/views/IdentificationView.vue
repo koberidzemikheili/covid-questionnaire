@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="yellow-overlay"></div>
     <div class="w-full">
-      <div class="mx-24 mt-28">
+      <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
           <img
             src="@/assets/images/redberry.png"
@@ -51,7 +51,7 @@
             />
           </div>
           <div class="w-full flex justify-center mb-24">
-            <button @click="Previous" class="content">
+            <button @click="Previous" class="content mr-20">
               <IconLeftArrow />
             </button>
             <button type="submit" form="IdentificationForm" class="content">
@@ -79,6 +79,11 @@ const submitForm = (values) => {
 };
 const Previous = () => {
   router.push({ name: "Start" });
+};
+const initialFormValues = {
+  name: store.getters.getIdentificationData.first_name,
+  lastname: store.getters.getIdentificationData.last_name,
+  email: store.getters.getIdentificationData.email,
 };
 </script>
 
