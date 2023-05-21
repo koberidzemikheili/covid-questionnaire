@@ -53,6 +53,7 @@ onMounted(() => {
 });
 
 function navigateToIdentification() {
+  localStorage.removeItem("my-app-state");
   router.push({ name: "Identification" });
 }
 </script>
@@ -68,7 +69,7 @@ function navigateToIdentification() {
 }
 
 .slide-fade-enter-active {
-  transition: all 1s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .slide-fade-leave-active {

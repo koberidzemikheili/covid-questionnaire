@@ -26,5 +26,6 @@ import { RouterView } from "vue-router";
 <style>
 body {
   background-color: rgb(235, 235, 235);
+  font-family: "bpg_arial";
 }
 </style>

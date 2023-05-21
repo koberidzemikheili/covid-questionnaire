@@ -1,6 +1,9 @@
 <template>
   <div class="overlay">
-    <div class="shape-transition" :class="{ 'heart-shape': isHeart }"></div>
+    <div
+      class="shape-transition"
+      :class="{ 'heart-shape': isHeart, 'page-transition': isAnimating }"
+    ></div>
     <div class="w-full">
       <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
@@ -30,14 +33,14 @@
               ყოველდღიური კომუნიკაციაც გაიშვიათდა.
             </div>
             <RadioField
-              label="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?**"
+              label="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?* "
               :options="SuggestPatternOptions"
               type="radio"
               name="non_formal_meetings"
               rules="required"
             />
             <RadioField
-              label="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?***"
+              label="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?*"
               :options="SuggestDaysOptions"
               type="radio"
               name="number_of_days_from_office"
@@ -93,7 +96,7 @@ import router from "@/router";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import { ref, onMounted } from "vue";
 const isHeart = ref(false);
-
+const isAnimating = ref(false);
 onMounted(() => {
   setTimeout(() => {
     isHeart.value = true;
@@ -125,7 +128,19 @@ const SuggestDaysOptions = [
 const store = useStore();
 const submitForm = (values) => {
   store.commit("setSuggestionsData", values);
-  store.dispatch("sendDataToServer");
+  store
+    .dispatch("sendDataToServer")
+    .then((response) => {
+      if (response.status === 201) {
+        isAnimating.value = true;
+        setTimeout(() => {
+          router.push({ name: "ThankYou" });
+        }, 200);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 const Previous = () => {
   router.push({ name: "VaccineQuestions" });
@@ -142,7 +157,6 @@ const Previous = () => {
   position: absolute;
   width: 200px;
   height: 200px;
-  background-color: gold;
   opacity: 0.5;
   animation: transition-circle-to-heart 0.6s ease-in-out forwards;
 }
@@ -162,6 +176,7 @@ const Previous = () => {
       39.5% 34.4%
     );
     transform: rotate(10deg) translate(690px, -80px);
+    background-color: gold;
   }
   100% {
     clip-path: path(
@@ -170,5 +185,28 @@ const Previous = () => {
     transform: translate(900px, 200px);
     background-color: red;
   }
+}
+
+@keyframes heart-growth2 {
+  0% {
+    clip-path: path(
+      "M96 31.992c-25.428-43.848-96-31.104-96 19.104 0 30.294 36.132 61.278 96 105.216 59.868-43.938 96-74.922 96-105.216 0-50.208-70.572-62.856-96-19.104z"
+    );
+    transform: translate(900px, 200px);
+    background-color: red;
+  }
+  100% {
+    clip-path: path(
+      "M1920 639.84c-508.56-877.76-1920-622.08-1920 382.08 0 605.88 722.64 1225.56 1920 2104.32 1197.36-878.76 1920-1498.44 1920-2104.32 0-1004.16-1411.44-1257.12-1920-382.08z"
+    );
+    transform: translate(-900px, -800px);
+    background-color: #232323;
+  }
+}
+.page-transition {
+  width: 100%;
+  height: 100%;
+  animation: heart-growth2 0.6s 0.2s ease-in-out forwards;
+  z-index: 999;
 }
 </style>
