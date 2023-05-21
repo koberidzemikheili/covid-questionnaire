@@ -10,7 +10,7 @@
             class="float-left"
           />
           <img
-            src="@/assets/images/right1.png"
+            src="@/assets/images/3.png"
             alt="Right image"
             class="float-right"
           />
@@ -187,7 +187,7 @@ const Previous = () => {
 @keyframes transition-circle-to-star {
   0% {
     clip-path: circle(50%);
-    transform: translate(955px, 270px);
+    transform: translate(880px, 325px);
     background-color: red;
   }
   100% {
@@ -203,7 +203,7 @@ const Previous = () => {
       5.5% 34.4%,
       39.5% 34.4%
     );
-    transform: rotate(10deg) scale(1.2) translate(690px, -80px);
+    transform: rotate(10deg) scale(1.2) translate(760px, -80px);
   }
 }
 </style>

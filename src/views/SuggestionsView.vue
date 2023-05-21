@@ -13,7 +13,7 @@
             class="float-left"
           />
           <img
-            src="@/assets/images/right1.png"
+            src="@/assets/images/44.png"
             alt="Right image"
             class="float-right"
           />
@@ -182,7 +182,7 @@ const Previous = () => {
     clip-path: path(
       "M96 31.992c-25.428-43.848-96-31.104-96 19.104 0 30.294 36.132 61.278 96 105.216 59.868-43.938 96-74.922 96-105.216 0-50.208-70.572-62.856-96-19.104z"
     );
-    transform: translate(900px, 200px);
+    transform: translate(975px, 220px);
     background-color: red;
   }
 }
@@ -192,7 +192,7 @@ const Previous = () => {
     clip-path: path(
       "M96 31.992c-25.428-43.848-96-31.104-96 19.104 0 30.294 36.132 61.278 96 105.216 59.868-43.938 96-74.922 96-105.216 0-50.208-70.572-62.856-96-19.104z"
     );
-    transform: translate(900px, 200px);
+    transform: translate(975px, 220px);
     background-color: red;
   }
   100% {

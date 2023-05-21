@@ -110,7 +110,7 @@ const initialFormValues = {
     background-color: #fe3b1f;
   }
   100% {
-    transform: translate(955px, 270px);
+    transform: translate(1050px, 295px);
     width: 400px;
     height: 50px;
     border-radius: 0%;

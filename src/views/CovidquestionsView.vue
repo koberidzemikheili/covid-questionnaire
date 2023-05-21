@@ -10,7 +10,7 @@
             class="float-left"
           />
           <img
-            src="@/assets/images/right1.png"
+            src="@/assets/images/4.png"
             alt="Right image"
             class="float-right"
           />
@@ -152,13 +152,13 @@ const Previous = () => {
 
 @keyframes move-overlay {
   0% {
-    transform: translate(955px, 270px);
+    transform: translate(1050px, 295px);
     width: 400px;
     height: 50px;
     border-radius: 0%;
   }
   100% {
-    transform: translate(780px, 325px);
+    transform: translate(880px, 325px);
     width: 200px;
     height: 200px;
     border-radius: 50%;
