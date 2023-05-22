@@ -1,35 +1,76 @@
-# covid-questionnaire
+# Covid Questionnaire
 
-This template should help get you started developing with Vue 3 in Vite.
+---
 
-## Recommended IDE Setup
+#
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Table of Contents
 
-## Customize configuration
+- [Prerequisites](#prerequisites)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Development](#development)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+#
 
-## Project Setup
+### Prerequisites
+
+- _npm@9 and up_
+- _node@16 and up_
+
+#
+
+### Tech Stack
+
+- [Vue3](https://vuejs.org/guide/introduction.html) - front-end framework
+
+#
+
+### Getting Started
+
+1\. First of all you need to clone repository from github:
+
+```sh
+git clone https://github.com/RedberryInternship/mikheil-koberidze-covid-questionnaire.git
+```
+
+2\. after you have installed all the PHP dependencies, it's time to install all the JS dependencies:
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+and also:
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+in order to build your JS/SaaS resources.
+
+3\. Now we need to set our env file. Go to the root of your project and execute this command.
 
 ```sh
-npm run build
+cp .env.example .env
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+And now you should provide **.env** file all the necessary environment variables:
+
+#
+
+### Development
+
+when working on JS you may run:
 
 ```sh
-npm run lint
+  npm run dev
 ```
+
+it builds your js files into executable scripts.
+If you want to watch files during development, execute instead:
+
+```sh
+  npm run watch
+```
+
+it will watch JS files and on change it'll rebuild them, so you don't have to manually build them.
