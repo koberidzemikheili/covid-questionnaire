@@ -21,7 +21,7 @@ defineProps({
   name: { type: String, required: true },
   label: { type: String, required: true },
   type: { type: String, required: true },
-  rules: { type: String, required: true },
+  rules: { type: String, required: false },
   addclass: { type: String, required: false },
   as: { type: String, required: false },
 });

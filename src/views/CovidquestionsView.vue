@@ -4,11 +4,7 @@
     <div class="w-full">
       <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
-          <img
-            src="@/assets/images/redberry.png"
-            alt="Left image"
-            class="float-left"
-          />
+          <IconRedberryLetters alt="Left image" class="float-left" />
           <img
             src="@/assets/images/4.png"
             alt="Right image"
@@ -103,17 +99,17 @@
 import { useStore } from "vuex";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { ref } from "vue";
+import IconRedberryLetters from "@/components/icons/IconRedberryLetters.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import router from "@/router";
 import "@/Rules/rules";
-import RadioField from "../components/RadioField.vue";
+import RadioField from "@/components/RadioField.vue";
 const store = useStore();
 const hadCovid = ref(store.getters.getIdentificationData.had_covid);
 const hadantibodytest = ref(
   store.getters.getIdentificationData.had_antibody_test
 );
-
 const covidOptions = [
   { label: "კი", value: "yes" },
   { label: "არა", value: "no" },

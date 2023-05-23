@@ -7,11 +7,7 @@
     <div class="w-full">
       <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
-          <img
-            src="@/assets/images/redberry.png"
-            alt="Left image"
-            class="float-left"
-          />
+          <IconRedberryLetters alt="Left image" class="float-left" />
           <img
             src="@/assets/images/44.png"
             alt="Right image"
@@ -50,7 +46,6 @@
               label="რას ფიქრობ ფიზიკურ შეკრებებზე?"
               type="textarea"
               name="what_about_meetings_in_live"
-              rules="mustbestring"
               addclass="h-32"
               as="textarea"
             />
@@ -59,7 +54,6 @@
                 რა მოგწონს, რას დაამატებდი, რას შეცვლიდი??"
               type="textarea"
               name="tell_us_your_opinion_about_us"
-              rules="mustbestring"
               addclass="h-32"
               as="textarea"
             />
@@ -90,8 +84,9 @@
 <script setup>
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
-import RadioField from "../components/RadioField.vue";
-import InputField from "../components/InputField.vue";
+import IconRedberryLetters from "@/components/icons/IconRedberryLetters.vue";
+import RadioField from "@/components/RadioField.vue";
+import InputField from "@/components/InputField.vue";
 import router from "@/router";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import { ref, onMounted } from "vue";
