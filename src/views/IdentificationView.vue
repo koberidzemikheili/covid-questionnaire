@@ -4,11 +4,7 @@
     <div class="w-full">
       <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
-          <img
-            src="@/assets/images/redberry.png"
-            alt="Left image"
-            class="float-left"
-          />
+          <IconRedberryLetters alt="Left image" class="float-left" />
           <img
             src="@/assets/images/right1.png"
             alt="Right image"
@@ -29,18 +25,21 @@
               label="სახელი*"
               type="text"
               rules="required|min:3"
+              placeholder="იოსებ"
             />
             <InputField
               name="lastname"
               label="გვარი"
               type="text"
               rules="required|min:3"
+              placeholder="ჯუღაშვილი"
             />
             <InputField
               name="email"
               label="იმეილი*"
               type="text"
               rules="required|redberryEmail"
+              placeholder="fbi@redberry.ge"
             />
           </Form>
           <div class="w-full md:w-2/3 flex justify-center">
@@ -68,6 +67,7 @@
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import router from "@/router";
+import IconRedberryLetters from "@/components/icons/IconRedberryLetters.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 import InputField from "@/components/InputField.vue";

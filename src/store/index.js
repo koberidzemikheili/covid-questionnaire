@@ -7,12 +7,12 @@ export default createStore({
     last_name: "",
     email: "",
     had_covid: "",
-    had_antibody_test: false,
+    had_antibody_test: null,
     antibodies: {},
     covid_sickness_date: null,
-    had_vaccine: false,
-    vaccination_stage: "",
-    i_am_waiting: "",
+    had_vaccine: null,
+    vaccination_stage: null,
+    i_am_waiting: null,
     non_formal_meetings: "",
     number_of_days_from_office: "",
     what_about_meetings_in_live: "",
@@ -46,9 +46,9 @@ export default createStore({
     },
   },
   getters: {
-    getIdentificationData: () => {
+    getIdentificationData: (state) => {
       const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      return savedState || false;
+      return savedState || state;
     },
   },
   actions: {

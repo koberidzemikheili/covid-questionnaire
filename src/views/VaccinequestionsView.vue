@@ -4,11 +4,7 @@
     <div class="w-full">
       <div class="mx-24 mt-24 border border-transparent">
         <div class="mb-10">
-          <img
-            src="@/assets/images/redberry.png"
-            alt="Left image"
-            class="float-left"
-          />
+          <IconRedberryLetters alt="Left image" class="float-left" />
           <img
             src="@/assets/images/3.png"
             alt="Right image"
@@ -113,7 +109,8 @@ import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import router from "@/router";
 import { ref, onMounted } from "vue";
-import RadioField from "../components/RadioField.vue";
+import RadioField from "@/components/RadioField.vue";
+import IconRedberryLetters from "@/components/icons/IconRedberryLetters.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
 const store = useStore();
