@@ -25,18 +25,21 @@
               label="სახელი*"
               type="text"
               rules="required|min:3"
+              placeholder="იოსებ"
             />
             <InputField
               name="lastname"
               label="გვარი"
               type="text"
               rules="required|min:3"
+              placeholder="ჯუღაშვილი"
             />
             <InputField
               name="email"
               label="იმეილი*"
               type="text"
               rules="required|redberryEmail"
+              placeholder="fbi@redberry.ge"
             />
           </Form>
           <div class="w-full md:w-2/3 flex justify-center">

@@ -68,6 +68,7 @@
                 name="antibodies.number"
                 rules="numeric"
                 class="bg-transparent border border-gray-500"
+                placeholder="ანტისხეულების რაოდენობა"
               />
               <div>
                 <ErrorMessage name="antibodies.number" class="text-red-600" />
